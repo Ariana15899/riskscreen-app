@@ -85,21 +85,19 @@ with pestana2:
     st.divider()
     st.subheader("➕ Agregar Nuevo Registro a las Listas")
     
-    with st.form("form_agregar"):
-        nuevo_nombre = st.text_input("Nombre completo de la persona/empresa:")
-        nueva_fuente = st.text_input("Fuente (ej. OFAC, ONU, Lista Interna):")
-        nueva_categoria = st.text_input("Categoría de riesgo:")
-        boton_guardar = st.form_submit_button("Guardar en la Base de Datos")
-
-        if boton_guardar:
-            if nuevo_nombre.strip() and nueva_fuente.strip() and nueva_categoria.strip():
-                conn = sqlite3.connect('riskscreen_local.db')
-                c = conn.cursor()
-                c.execute('INSERT INTO listas_restrictivas (nombre, fuente, categoria) VALUES (?, ?, ?)', 
-                          (nuevo_nombre.upper(), nueva_fuente.upper(), nueva_categoria))
-                conn.commit()
-                conn.close()
-                st.success(f"¡El registro de '{nuevo_nombre.upper()}' se ha agregado con éxito!")
-                st.rerun()
-            else:
-                st.error("Por favor, complete todos los campos para poder guardar.")
+    nuevo_nombre = st.text_input("Nombre completo de la persona/empresa:", key="txt_nombre")
+    nueva_fuente = st.text_input("Fuente (ej. OFAC, ONU, Lista Interna):", key="txt_fuente")
+    nueva_categoria = st.text_input("Categoría de riesgo:", key="txt_cat")
+    
+    if st.button("Guardar en la Base de Datos"):
+        if nuevo_nombre.strip() and nueva_fuente.strip() and nueva_categoria.strip():
+            conn = sqlite3.connect('riskscreen_local.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO listas_restrictivas (nombre, fuente, categoria) VALUES (?, ?, ?)', 
+                      (nuevo_nombre.upper(), nueva_fuente.upper(), nueva_categoria))
+            conn.commit()
+            conn.close()
+            st.success(f"¡El registro de '{nuevo_nombre.upper()}' se ha agregado con éxito!")
+            st.rerun()
+        else:
+            st.error("Por favor, complete todos los campos para poder guardar.")
