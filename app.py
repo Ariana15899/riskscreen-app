@@ -92,7 +92,7 @@ with pestana2:
         nueva_categoria = st.text_input("Categoría de riesgo:")
         boton_guardar = st.form_submit_button("Guardar en la Base de Datos")
 
-        if boton_guardar:
+if boton_guardar:
             if nuevo_nombre.strip() and nueva_fuente.strip() and nueva_categoria.strip():
                 conn = sqlite3.connect('riskscreen_local.db')
                 c = conn.cursor()
@@ -101,6 +101,6 @@ with pestana2:
                 conn.commit()
                 conn.close()
                 st.success(f"¡El registro de '{nuevo_nombre.upper()}' se ha agregado con éxito!")
-    st.rerun() # Recarga la página para mostrar el cambio reflejado en la tabla
-else:
-    st.error("Por favor, complete todos los campos para poder guardar.")
+                st.rerun()
+            else:
+                st.error("Por favor, complete todos los campos para poder guardar.")
