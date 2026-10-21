@@ -101,6 +101,6 @@ with pestana2:
                 conn.commit()
                 conn.close()
                 st.success(f"¡El registro de '{nuevo_nombre.upper()}' se ha agregado con éxito!")
-                st.rerun() # Recarga la página para mostrar el cambio reflejado en la tabla
-           else:
-                st.error("Por favor, complete todos los campos para poder guardar.")
+    st.rerun() # Recarga la página para mostrar el cambio reflejado en la tabla
+else:
+    st.error("Por favor, complete todos los campos para poder guardar.")
